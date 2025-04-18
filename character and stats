@@ -1,0 +1,173 @@
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Screen setup
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Wizard, Warrior, Archer Demo")
+
+# Colors
+WHITE = (255, 255, 255)
+RED = (200, 50, 50)
+BLUE = (50, 50, 200)
+GREEN = (50, 200, 50)
+
+# Base Character class
+class Character(pygame.sprite.Sprite):
+    def __init__(self, x, y, color, name):
+        super().__init__()
+        self.image = pygame.Surface((50, 80))
+        self.image.fill(color)
+        self.rect = self.image.get_rect(topleft=(x, y))
+        self.name = name
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+        font = pygame.font.SysFont(None, 20)
+        text = font.render(self.name, True, WHITE)
+        surface.blit(text, (self.rect.x, self.rect.y - 20))
+
+# Character subclasses
+class Wizard(Character):
+    def __init__(self, x, y):
+        super().__init__(x, y, BLUE, "Wizard")
+
+class Warrior(Character):
+    def __init__(self, x, y):
+        super().__init__(x, y, RED, "Warrior")
+
+class Archer(Character):
+    def __init__(self, x, y):
+        super().__init__(x, y, GREEN, "Archer")
+
+# Create character instances
+wizard = Wizard(100, 400)
+warrior = Warrior(300, 400)
+archer = Archer(500, 400)
+
+# Game loop
+clock = pygame.time.Clock()
+running = True
+while running:
+    clock.tick(60)
+    screen.fill((30, 30, 30))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Draw characters
+    wizard.draw(screen)
+    warrior.draw(screen)
+    archer.draw(screen)
+
+    pygame.display.flip()
+
+pygame.quit()
+sys.exit()
+
+
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Screen setup
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Wizard, Warrior, Archer Stats")
+
+# Colors
+WHITE = (255, 255, 255)
+RED = (200, 50, 50)
+BLUE = (50, 50, 200)
+GREEN = (50, 200, 50)
+DARK_GRAY = (30, 30, 30)
+
+# Font
+font = pygame.font.SysFont(None, 20)
+
+# Base Character class
+class Character(pygame.sprite.Sprite):
+    def __init__(self, x, y, color, name, stats):
+        super().__init__()
+        self.image = pygame.Surface((50, 80))
+        self.image.fill(color)
+        self.rect = self.image.get_rect(topleft=(x, y))
+        self.name = name
+        self.stats = stats
+
+    def draw(self, surface):
+        # Draw character block
+        surface.blit(self.image, self.rect)
+        # Draw name
+        name_text = font.render(self.name, True, WHITE)
+        surface.blit(name_text, (self.rect.x, self.rect.y - 20))
+        # Draw stats
+        for i, (key, value) in enumerate(self.stats.items()):
+            stat_text = font.render(f"{key}: {value}", True, WHITE)
+            surface.blit(stat_text, (self.rect.x, self.rect.y + 85 + (i * 15)))
+
+# Character subclasses with unique stats
+class Wizard(Character):
+    def __init__(self, x, y):
+        stats = {
+            "Health": 70,
+            "Mana": 100,
+            "Attack": 30,
+            "Defense": 20,
+            "Speed": 40
+        }
+        super().__init__(x, y, BLUE, "Wizard", stats)
+
+class Warrior(Character):
+    def __init__(self, x, y):
+        stats = {
+            "Health": 120,
+            "Mana": 0,
+            "Attack": 50,
+            "Defense": 40,
+            "Speed": 30
+        }
+        super().__init__(x, y, RED, "Warrior", stats)
+
+class Archer(Character):
+    def __init__(self, x, y):
+        stats = {
+            "Health": 80,
+            "Mana": 50,
+            "Attack": 40,
+            "Defense": 25,
+            "Speed": 60
+        }
+        super().__init__(x, y, GREEN, "Archer", stats)
+
+# Create character instances
+wizard = Wizard(100, 300)
+warrior = Warrior(325, 300)
+archer = Archer(550, 300)
+
+# Game loop
+clock = pygame.time.Clock()
+running = True
+while running:
+    clock.tick(60)
+    screen.fill(DARK_GRAY)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Draw characters
+    wizard.draw(screen)
+    warrior.draw(screen)
+    archer.draw(screen)
+
+    pygame.display.flip()
+
+pygame.quit()
+sys.exit()
