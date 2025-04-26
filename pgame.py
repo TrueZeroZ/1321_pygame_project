@@ -1,9 +1,10 @@
 import pygame, sys,os, random
-from Charactor import Character
+from Charactor import Character, Boss
 from  HealthBar import HealthBar
 
 pygame.init()
 pygame.mixer.init()
+
 
 
 #Load background music
@@ -49,7 +50,7 @@ def draw_text(text, font, text_col, x, y):
     screen.blit(img, (x, y))
 
 #function to for drawing background  to screen
-def draw_bg():
+def draw_bg(boss_background_img=None):
     if is_boss_level:
         screen.blit(boss_background_img, (0, 0))
     else:
